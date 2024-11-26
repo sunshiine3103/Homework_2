@@ -1,25 +1,32 @@
-def hex_to_rgb(hex_color):
-    hex_color = hex_color.lstrip('#')
-    return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
-def rgb_to_hex(rgb_color):
-    return '#{:02x}{:02x}{:02x}'.format([club48675417|*rgb_color])
-def average_colors():
-    hex_color_list = []
-    while True:
-        user_input = input("Введите цвет в формате HEX (или 'готово' чтобы закончить): ")
-        if user_input.lower() == 'готово':
-            break
-        hex_color_list.append(user_input)
-    if not hex_color_list:
-        print("Вы не ввели цветов. Выход.")
-        return None
-    rgb_color_list = [hex_to_rgb(hex_color) for hex_color in hex_color_list]
-    avg_red = sum(c[0] for c in rgb_color_list) // len(rgb_color_list)
-    avg_green = sum(c[1] for c in rgb_color_list) // len(rgb_color_list)
-    avg_blue = sum(c[2] for c in rgb_color_list) // len(rgb_color_list) // len(rgb_color_list)
-    avg_color = rgb_to_hex((avg_red, avg_green, avg_blue))
-    return avg_color
-if name == "__main__":
-    result = average_colors()
-    if result:
-        print(f"Средний цвет : {result}")
+from math import sqrt
+
+def hex_to_rgb(hex_code):
+    if not isinstance(hex_code, str) or not (len(hex_code) == 7 or len(hex_code) == 4):
+        raise ValueError("Неправильный формат HEX-кода цвета.")
+    hex_code = hex_code.lstrip('#')
+    if len(hex_code) == 3:
+        hex_code = ''.join(c * 2 for c in hex_code)
+    try:
+        r, g, b = (int(hex_code[i:i+2], 16) for i in (0, 2, 4))
+        return r, g, b
+    except ValueError:
+        raise ValueError("Неправильный формат HEX-кода цвета.")
+
+def rgb_to_hex(rgb_tuple):
+    r, g, b = rgb_tuple
+    return f"#{r:02x}{g:02x}{b:02x}"
+
+def color_averager(*hex_colors):
+    if len(hex_colors) < 2:
+        raise ValueError("Нужно передать хотя бы два HEX-кода цвета.")
+
+    rgb_colors = [hex_to_rgb(hex_color) for hex_color in hex_colors]
+    r_values = [rgb[0] for rgb in rgb_colors]
+    g_values = [rgb[1] for rgb in rgb_colors]
+    b_values = [rgb[2] for rgb in rgb_colors]
+
+    avg_r = int(sqrt(sum(r**2 for r in r_values) / len(r_values)))
+    avg_g = int(sqrt(sum(g**2 for g in g_values) / len(g_values)))
+    avg_b = int(sqrt(sum(b**2 for b in b_values) / len(b_values)))
+
+    return rgb_to_hex((avg_r, avg_g, avg_b))
