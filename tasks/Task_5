@@ -1,0 +1,13 @@
+import time
+
+def random_number_generator():
+    while True:
+        time.sleep(0.01)
+
+        current_time = int(time.time() * 1000)
+        random_number = (current_time % 101)
+        yield random_number
+
+my_generator = random_number_generator()
+for i in range(5):
+    print(next(my_generator))
