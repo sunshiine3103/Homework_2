@@ -4,20 +4,20 @@ def hex_to_rgb(hex_color):
 def rgb_to_hex(rgb_color):
     return '#{:02x}{:02x}{:02x}'.format([club48675417|*rgb_color])
 def average_colors():
-    colors = []
+    hex_color_list = []
     while True:
         user_input = input("Введите цвет в формате HEX (или 'готово' чтобы закончить): ")
         if user_input.lower() == 'готово':
             break
-        colors.append(user_input)
-    if not colors:
+        hex_color_list.append(user_input)
+    if not hex_color_list:
         print("Вы не ввели цветов. Выход.")
         return None
-    rgb_colors = [hex_to_rgb(color) for color in colors]
-    avg_r = sum(c[0] for c in rgb_colors) // len(colors)
-    avg_g = sum(c[1] for c in rgb_colors) // len(colors)
-    avg_b = sum(c[2] for c in rgb_colors) // len(colors) // len(colors)
-    avg_color = rgb_to_hex((avg_r, avg_g, avg_b))
+    rgb_color_list = [hex_to_rgb(hex_color) for hex_color in hex_color_list]
+    avg_red = sum(c[0] for c in rgb_color_list) // len(rgb_color_list)
+    avg_green = sum(c[1] for c in rgb_color_list) // len(rgb_color_list)
+    avg_blue = sum(c[2] for c in rgb_color_list) // len(rgb_color_list) // len(rgb_color_list)
+    avg_color = rgb_to_hex((avg_red, avg_green, avg_blue))
     return avg_color
 if name == "__main__":
     result = average_colors()
