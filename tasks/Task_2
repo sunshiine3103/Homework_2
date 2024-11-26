@@ -1,0 +1,5 @@
+def jaccard_index(set_1, set_2):
+    obed = len(set_1 | set_2)
+    per = len(set_1 & set_2)
+    J = per / obed
+    return J
