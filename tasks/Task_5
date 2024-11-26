@@ -4,10 +4,10 @@ def random_number_generator():
     while True:
         time.sleep(0.01)
 
-        current_time = int(time.time() * 1000)
-        random_number = (current_time % 101)
-        yield random_number
+        cur_t = int(time.time() * 1000)
+        random_num = (cur_t % 101)
+        yield random_num
 
-my_generator = random_number_generator()
-for i in range(5):
-    print(next(my_generator))
+generator = random_number_generator()
+for _ in range(5):
+    print(next(generator))
